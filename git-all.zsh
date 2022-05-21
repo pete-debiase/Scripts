@@ -9,6 +9,7 @@
 # └─────────────────────────────────────────────────────────────────────────────
 autoload colors && colors
 alias -g git='git.exe'
+alias -g fd='fd.exe'
 
 # ┌─────────────────────────────────────────────────────────────────────────────
 # │ Functions
@@ -86,7 +87,7 @@ git_info() {
 git_command=$1
 
 search_depth=10
-git_repos=$(find . -maxdepth $search_depth -name .git -type d | rev | cut -c 6- | rev)
+git_repos=$(fd -HI --type d \.git$ | rev | cut -c 6- | rev)
 git_repos=(${(f)git_repos}) # Split plaintext list of found repos on newlines to create a proper array
 
 echo "\nRunning 'git "$@"' on ${#git_repos[@]} repos in: ${PWD}\n"
